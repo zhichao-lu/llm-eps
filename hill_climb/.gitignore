@@ -1,0 +1,11 @@
+ignore
+admissible_set/starcoder/logs/
+bin_packing_or/starcoder/logs/
+bin_packing_weibull/starcoder/logs/
+gls_job_shop_scheduling/starcoder/logs/
+gls_tsp/starcoder/logs/
+greedy_tsp/starcoder/logs/
+.idea
+.DS_Store
+gls_job_shop_scheduling
+greedy_tsp
