@@ -1,6 +1,0 @@
-{
-  "url": "http://127.0.0.1:11045/completions",
-  "samples_per_prompt": 20,
-  "batch_inference": true
-}
-
