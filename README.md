@@ -106,7 +106,7 @@ The server scripts are in `llm_server` folder. Please find the right python file
 cd llm_server
 
 python xxx.py \
-	--path [your path to LLM] \
+  --path [your path to LLM] \
   --d [GPU ids, e.g., 0 1 2 3 4] \
   --host [the ip of the server, default is 127.0.0.1] \
   --port [the port of the server] \
