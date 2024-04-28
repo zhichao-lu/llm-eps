@@ -1,0 +1,1 @@
+Returns the priority with which we want to add `el` to the set.

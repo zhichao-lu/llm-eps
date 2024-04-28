@@ -1,0 +1,1 @@
+{"function": "import numpy as np\ndef heuristics_v2(el: tuple[int, ...], n: int, w: int) -> float:\n    return -min(len(el), n, key=lambda x: abs(x - el)) / n", "score": null, "iter": 6}

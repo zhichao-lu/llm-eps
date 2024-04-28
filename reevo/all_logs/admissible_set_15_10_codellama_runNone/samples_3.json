@@ -1,0 +1,1 @@
+{"function": "import numpy as np\ndef heuristics_v2(el: tuple[int, ...], n: int, w: int) -> float:\n    \"\"\"\n    Improved version of the heuristics function for solving cap set related problems.\n    This function returns the priority with which we want to add 'el' to the set.", "score": null, "iter": 1}

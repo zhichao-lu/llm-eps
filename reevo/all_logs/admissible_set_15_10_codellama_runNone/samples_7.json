@@ -1,0 +1,1 @@
+{"function": "import numpy as np\ndef heuristics_v1(el: tuple[int, ...], n: int, w: int) -> float:\n    return 0.0", "score": 1842, "iter": 1}

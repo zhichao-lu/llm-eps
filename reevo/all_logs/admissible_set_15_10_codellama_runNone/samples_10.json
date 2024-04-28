@@ -1,0 +1,1 @@
+{"function": "import numpy as np\ndef get_weighted_sum(lst, n, w):\n    return sum(i * w for i in lst) / (n * w)", "score": 1740, "iter": 1}

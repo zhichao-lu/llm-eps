@@ -1,0 +1,23 @@
+defaults:
+  - _self_
+  - problem: tsp_constructive
+  - override hydra/output: local
+
+hydra:
+  job:
+    chdir: True
+
+# The chosen algorithm
+algorithm: reevo # another option is "ael"
+
+# LLM parameters
+model: gpt-3.5-turbo-0613  # LLM model (other options include gpt-4-1106-preview)
+temperature: 1  # temperature for chat completion
+suffix: GPT  # suffix for generated files (indicates LLM model)
+
+# Main GA loop parameters
+max_fe: 10000 # maximum number of function evaluations
+pop_size: 100 # population size for GA
+mutation_rate: 0.5 # mutation rate for GA
+# FIXME !!! timeout 如何设置呢
+timeout: 20 # timeout for evaluation of a single heuristic

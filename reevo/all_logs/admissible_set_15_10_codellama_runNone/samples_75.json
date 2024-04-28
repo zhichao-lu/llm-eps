@@ -1,0 +1,1 @@
+{"function": "import numpy as np\ndef heuristics_v2(el: tuple[int, ...], n: int, w: int) -> float:\n    priority = -0.5 * len(el) / n - 0.3 * (sum(el) - w) ** 2 / (w ** 2) - 0.2 * sum(el) / w\n    # Prioritize multiple objectives\n    return priority", "score": 1452, "iter": 10}

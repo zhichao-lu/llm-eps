@@ -1,0 +1,1 @@
+{"function": "import numpy as np\ndef heuristics_v2(el: tuple[int, ...], n: int, w: int) -> float:\n    w1, w2, w3 = 0.4, 0.3, 0.3\n\n    dev = (sum(el) - w) ** 2 / (w ** 2)\n    sum_el = sum(el)\n    factor = len(el) * w1\n    priority = -dev * factor + sum_el / w\n\n    return -w1 * len(el) / n - w2 * dev + w3 * sum_el / w", "score": 1398, "iter": 12}

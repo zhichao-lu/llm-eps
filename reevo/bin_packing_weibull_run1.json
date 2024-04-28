@@ -1,0 +1,5 @@
+{
+  "url": "http://127.0.0.1:12007/chat/completions",
+  "batch_inference": false
+}
+

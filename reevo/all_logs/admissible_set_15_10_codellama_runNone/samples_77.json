@@ -1,0 +1,1 @@
+{"function": "import numpy as np\ndef heuristics_v2(el: tuple[int, ...], n: int, w: int) -> float:\n    # Weighted sum of penalties\n    return (-(len(el) / n + sum(el) / w) / (2 * w))", "score": 1452, "iter": 10}

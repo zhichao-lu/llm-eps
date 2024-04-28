@@ -1,0 +1,1 @@
+{"function": "import numpy as np\ndef heuristics_v2(el: tuple[int, ...], n: int, w: int) -> float:\n    dist = sum(abs(el[i] - xi) for i, xi in enumerate(el))\n    factor = dist / (n * w)\n    priority = factor ** 2 + 0.1 * (len(el) - n) ** 2\n    return priority", "score": 1842, "iter": 4}

@@ -1,0 +1,1 @@
+def update_edge_distance_v{version}(edge_distance: np.ndarray, local_opt_tour: np.ndarray, edge_n_used: np.ndarray) -> np.ndarray:

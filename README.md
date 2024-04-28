@@ -1,4 +1,4 @@
-# Code implementations for *FunSearch*, *RandomSampling*, and *(1+1)-EPS*
+# Code implementations for *FunSearch*, *RandomSampling*, *(1+1)-EPS*, EoH, ReEvo
 
 This repository includes code for the following paper:
 
@@ -18,17 +18,17 @@ Please install the packages listed in `requirements.txt`.
 
 Not all LLMs can be used for an LLM-based EPS method.
 
-| LLMs                   | FunSearch | (1+1)-EPS (HillClimbing) | RandomSampling |
-| :--------------------- | :-------: | :----------------------: | :------------: |
-| UniXcoder              |     x     |            x             |       v        |
-| CodeLlama-7B-instruct  |     v     |            v             |       v        |
-| CodeLlama-34B-Instruct |     v     |            v             |       v        |
-| StarCoder              |     v     |            v             |       v        |
-| DeepSeek-Coder-6.7B    |     v     |            v             |       v        |
-| DeepSeek-Coder-33B     |     v     |            v             |       v        |
-| GPT-3.5 (API)          |     v     |            v             |       v        |
-| GPT-4 (API)            |     v     |            v             |       v        |
-| Claude-3-Opus (API)    |     v     |            v             |       v        |
+| LLMs                   | FunSearch | (1+1)-EPS (HillClimbing) | RandomSampling | EoH  | ReEvo |
+| :--------------------- | :-------: | :----------------------: | :------------: | :--: | :---: |
+| UniXcoder              |     x     |            x             |       v        |  x   |   x   |
+| CodeLlama-7B-instruct  |     v     |            v             |       v        |  v   |   v   |
+| CodeLlama-34B-Instruct |     v     |            v             |       v        |  v   |   v   |
+| StarCoder              |     v     |            v             |       v        |  x   |   x   |
+| DeepSeek-Coder-6.7B    |     v     |            v             |       v        |  v   |   v   |
+| DeepSeek-Coder-33B     |     v     |            v             |       v        |  v   |   v   |
+| GPT-3.5 (API)          |     v     |            v             |       v        |  v   |   v   |
+| GPT-4 (API)            |     v     |            v             |       v        |  v   |   v   |
+| Claude-3-Opus (API)    |     v     |            v             |       v        |  v   |   v   |
 
 ## Project structure
 

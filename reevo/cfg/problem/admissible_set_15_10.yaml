@@ -1,0 +1,6 @@
+problem_name: admissible_set_15_10
+problem_type: None
+obj_type: min
+problem_size: 200 # problem size for validation
+func_name: heuristics
+description: Solving cap set related problems.
