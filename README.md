@@ -36,11 +36,11 @@ Not all LLMs can be used for an LLM-based EPS method.
 
 &nbsp;&nbsp;&nbsp;&nbsp;|----`task_name` (admissible_set, bin_packing_or, bin_packing_weibull, gls_tsp)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_completion.py` for LLMs that support code completion generation (please refer to the table below).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_completion.py` for LLMs that support code completion generation.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_instruct.py` for LLMs that support instruct generation (please refer to the table below).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_instruct.py` for LLMs that support instruct generation.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_api.py` using LLM api (please refer to the table below).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_api.py` using LLM api.
 
 &nbsp;&nbsp;&nbsp;&nbsp;|----`funsearch_impl`
 
@@ -48,11 +48,11 @@ Not all LLMs can be used for an LLM-based EPS method.
 
 &nbsp;&nbsp;&nbsp;&nbsp;|----`task_name` (admissible_set, bin_packing_or, bin_packing_weibull, gls_tsp)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_completion.py` for LLMs that support code completion generation (please refer to the table below).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_completion.py` for LLMs that support code completion generation.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_instruct.py` for LLMs that support instruct generation (please refer to the table below).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_instruct.py` for LLMs that support instruct generation.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_api.py` using LLM api (please refer to the table below).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_api.py` using LLM api.
 
 &nbsp;&nbsp;&nbsp;&nbsp;|----`rand_search_impl`
 
@@ -60,11 +60,11 @@ Not all LLMs can be used for an LLM-based EPS method.
 
 &nbsp;&nbsp;&nbsp;&nbsp;|----`task_name` (admissible_set, bin_packing_or, bin_packing_weibull, gls_tsp)
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_completion.py` for LLMs that support code completion generation (please refer to the table below).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_completion.py` for LLMs that support code completion generation.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_instruct.py` for LLMs that support instruct generation (please refer to the table below).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_instruct.py` for LLMs that support instruct generation.
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_api.py` using LLM api (please refer to the table below).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|----`task_name_api.py` using LLM api.
 
 &nbsp;&nbsp;&nbsp;&nbsp;|----`hill_climb_impl`
 
