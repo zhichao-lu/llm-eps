@@ -129,7 +129,7 @@ An template for a config file is shown below:
 
 ##### Start LLM-based EPS 
 
-We suggest run using 'nohup'. The instruction is shown below.
+We suggest using 'nohup'. The instruction is shown below.
 
 ```shell
 nohup python xxx.py --run 1 --config run1_runtime_llm_config.json > run1.out 2>&1 &
@@ -182,7 +182,7 @@ def _draw_sample(self, content: str) -> str:
 
 ##### Start LLM-based EPS
 
-We suggest run using 'nohup'. The instruction is shown below.
+We suggest using 'nohup'. The instruction is shown below.
 
 ```shell
 nohup python xxx.py --run 1 > run1.out 2>&1 &
