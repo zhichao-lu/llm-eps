@@ -1,1 +1,0 @@
-{"function": "import numpy as np\ndef heuristics_v2(el: tuple[int, ...], n: int, w: int) -> float:\n    # Use a normalized score to account for differences in the size and structure of the sets\n    penalty1 = len(el) / n\n    penalty2 = (sum(el) - w) ** 2 / (w ** 2)\n    penalty3 = sum(el) / w\n    return -1 * penalty1 - np.mean(penalty2, penalty3)", "score": null, "iter": 12}

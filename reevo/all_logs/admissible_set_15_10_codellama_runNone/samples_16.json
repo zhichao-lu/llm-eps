@@ -1,1 +1,0 @@
-{"function": "import numpy as np\ndef heuristics_v2(el: tuple[int, ...], n: int, w: int) -> float:\n    if sum(el) > w:\n        return 0.0\n    else:\n        return 1.0", "score": 1713, "iter": 2}

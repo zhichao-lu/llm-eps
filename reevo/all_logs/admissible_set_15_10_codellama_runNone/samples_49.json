@@ -1,1 +1,0 @@
-{"function": "import numpy as np\ndef heuristics_v2(el: tuple[int, ...], n: int, w: int) -> float:\n    num_elements = len(el)\n    sum_of_elements = sum(el)\n    expected_sum = num_elements * w / n\n    deviation = sum_of_elements - expected_sum\n\n    penalty1 = (deviation / w) ** 2\n    penalty2 = (num_elements / n)\n\n    return penalty1 + penalty2", "score": 1740, "iter": 6}

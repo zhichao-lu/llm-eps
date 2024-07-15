@@ -1,49 +1,10 @@
-import json
-import logging
-import subprocess
-import sys
-
-import numpy as np
-import os
-import hydra
-import logging
-import os
 from pathlib import Path
-import subprocess
-from utils.utils import *
+
+import hydra
+import numpy as np
+
 from my_task.gls_tsp_eval import Sandbox
-
-RESUME_MODE = True
-PATH = 'all_logs/gls_tsp_codellama_run1'
-
-
-def resume_pops():
-    log_file_path = os.path.join(os.path.dirname(__file__), PATH)
-    max_iters = 0
-    for sample_file in os.listdir(log_file_path):
-        sample_file = os.path.join(log_file_path, sample_file)
-        with open(sample_file, 'r') as f:
-            sample_json = json.load(f)
-            f.close()
-        max_iters = max(sample_json['iter'], max_iters)
-
-    max_iters -= 1
-    pop = []
-    for sample_file in os.listdir(log_file_path):
-        sample_file = os.path.join(log_file_path, sample_file)
-        with open(sample_file, 'r') as f:
-            sample_json = json.load(f)
-            f.close()
-            if sample_json['iter'] == max_iters:
-                indi = {
-                    "code": sample_json['function'],
-                    "obj": sample_json['score'] if sample_json['score'] is not None else float('inf'),
-                    "exec_success": True,
-                    "stdout_filepath": "",
-                    "code_path": ""
-                }
-                pop.append(indi)
-    return pop, max_iters
+from utils.utils import *
 
 
 class ReEvo:
@@ -59,11 +20,8 @@ class ReEvo:
         self.runtime_config_path = runtime_config_path
         _run = 'None' if 'run' not in self.cfg else self.cfg.run
         _cur_file_ = os.path.dirname(__file__)
-        if local_llm:
-            _llm = 'codellama'
-        else:
-            _llm = 'gpt35'
-        self._my_log_path = os.path.join(_cur_file_, 'all_logs', f'{self.cfg.problem.problem_name}_{_llm}_run{_run}')
+        llm_name_ = cfg.llm_name
+        self._my_log_path = os.path.join(_cur_file_, 'all_logs', f'{self.cfg.problem.problem_name}_{llm_name_}_run{_run}')
         print(self._my_log_path)
         os.makedirs(self._my_log_path, exist_ok=True)
         #
@@ -78,10 +36,7 @@ class ReEvo:
         self.best_code_path_overall = None
 
         self.init_prompt()
-        if RESUME_MODE:
-            self.resume_population()
-        else:
-            self.init_population()
+        self.init_population()
 
     def init_prompt(self) -> None:
         self.problem = self.cfg.problem.problem_name
@@ -137,17 +92,6 @@ class ReEvo:
         self.print_short_term_reflection_prompt = True  # Print short-term reflection prompt for the first iteration
         self.print_long_term_reflection_prompt = True  # Print long-term reflection prompt for the first iteration
 
-    def resume_population(self):
-        logging.info("Loading population...")
-        exist_samples = len(os.listdir(os.path.join(os.path.dirname(__file__), PATH)))
-        print(f'exist_samples: {exist_samples}')
-        self.function_evals = exist_samples
-        pop, iters = resume_pops()
-        self.population = pop
-        self.iteration = iters
-        self.update_iter()
-        logging.info("Loading population OK !")
-
     def init_population(self) -> None:
         # Evaluate the seed function, and set it as Elite
         logging.info("Evaluating seed function...")
@@ -192,7 +136,7 @@ class ReEvo:
         Convert response to individual
         """
         # content = response.message.content  
-        content = response  # TODO 如果用自己的API，那么response其实就是content
+        content = response
 
         # Write response to file
         file_name = f"problem_iter{self.iteration}_response{response_id}.txt" if file_name is None else file_name + ".txt"
@@ -231,66 +175,6 @@ class ReEvo:
         individual["traceback_msg"] = traceback_msg
         return individual
 
-    # def __evaluate_population(self, population: list[dict]) -> list[dict]:
-    #     """
-    #     Evaluate population by running code in parallel and computing objective values.
-    #     """
-    #     inner_runs = []
-    #     # Run code to evaluate
-    #     for response_id in range(len(population)):  # TODO 这里所谓的response id其实就是一个编号
-    #         self.function_evals += 1
-    #         # Skip if response is invalid
-    #         if population[response_id]["code"] is None:
-    #             population[response_id] = self.mark_invalid_individual(population[response_id], "Invalid response!")
-    #             inner_runs.append(None)
-    #             continue
-    #
-    #         logging.info(f"Iteration {self.iteration}: Running Code {response_id}")
-    #
-    #         try:
-    #             process = self._run_code(population[response_id], response_id)
-    #             inner_runs.append(process)
-    #         except Exception as e:  # If code execution fails
-    #             logging.info(f"Error for response_id {response_id}: {e}")
-    #             population[response_id] = self.mark_invalid_individual(population[response_id], str(e))
-    #             inner_runs.append(None)
-    #
-    #     # Update population with objective values
-    #     for response_id, inner_run in enumerate(inner_runs):
-    #         if inner_run is None:  # If code execution fails, skip
-    #             continue
-    #         try:
-    #             inner_run.communicate(timeout=self.cfg.timeout)  # Wait for code execution to finish
-    #         except subprocess.TimeoutExpired as e:
-    #             logging.info(f"Error for response_id {response_id}: {e}")
-    #             population[response_id] = self.mark_invalid_individual(population[response_id], str(e))
-    #             inner_run.kill()
-    #             continue
-    #
-    #         individual = population[response_id]
-    #         stdout_filepath = individual["stdout_filepath"]
-    #         with open(stdout_filepath, 'r') as f:  # read the stdout file
-    #             stdout_str = f.read()
-    #         traceback_msg = filter_traceback(stdout_str)
-    #
-    #         individual = population[response_id]
-    #         # Store objective value for each individual
-    #         if traceback_msg == '':  # If execution has no error
-    #             try:  # TODO 这里得到fitness evaluation的结果
-    #                 # TODO individual['obj'] = score
-    #                 individual["obj"] = float(stdout_str.split('\n')[-2]) if self.obj_type == "min" else -float(
-    #                     stdout_str.split('\n')[-2])
-    #                 # TODO individual['exec_success'] = 是否执行成功
-    #                 individual["exec_success"] = True
-    #             except:
-    #                 population[response_id] = self.mark_invalid_individual(population[response_id],
-    #                                                                        "Invalid std out / objective value!")
-    #         else:  # Otherwise, also provide execution traceback error feedback
-    #             population[response_id] = self.mark_invalid_individual(population[response_id], traceback_msg)
-    #
-    #         logging.info(f"Iteration {self.iteration}, response_id {response_id}: Objective value: {individual['obj']}")
-    #     return population
-
     def evaluate_population(self, population: list[dict]) -> list[dict]:
         """Evaluate population by running code in parallel and computing objective values.
         """
@@ -298,7 +182,7 @@ class ReEvo:
 
         inner_runs = []
         # Run code to evaluate
-        for response_id in range(len(population)):  # TODO 这里所谓的response id其实就是一个编号
+        for response_id in range(len(population)):
             self.function_evals += 1
             # Skip if response is invalid
             if population[response_id]["code"] is None:

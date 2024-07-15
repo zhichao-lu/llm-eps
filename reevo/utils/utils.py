@@ -1,22 +1,17 @@
-import subprocess
-import os
 import json
 import logging
-from typing import List, Dict, Collection
+import os
 import sys
+from typing import List, Dict
 
 import requests
 
 sys.path.append('../')
 from my_task import _evaluator_accelerate
 # from openai import OpenAI
-import multiprocessing
 import time
 import re
 import http.client
-
-
-# client = OpenAI()
 
 
 def file_to_string(filename):
@@ -60,22 +55,9 @@ def extract_description(response: str) -> tuple[str, str]:
     return desc_string
 
 
-# def get_chat_completion(client, message, model="gpt-3.5-turbo-1106", temperature=0.):
-#     """
-#     Deprecated. Use chat_completion instead.
-#     """
-#     raise NotImplementedError
-#     completion = client.chat.completions.create(
-#         model=model,
-#         messages=message,
-#         temperature=temperature,
-#     )
-#     return completion.choices[0].message.content
-
-
 def multi_chat_completion(messages_list: list[list[dict]], n=1, model: str = "gpt-3.5-turbo-1106",
                           temperature: float = 0., local_llm: bool = False,
-                    config_path=None) -> List[List[str]]:
+                          config_path=None) -> List[List[str]]:
     """
     An example of messages_list:
     
@@ -101,43 +83,6 @@ def multi_chat_completion(messages_list: list[list[dict]], n=1, model: str = "gp
         contents.append(content)
     return contents
 
-    # with multiprocessing.Pool() as executor:
-    #     # Create a list of arguments to pass to get_chat_completion
-    #     args = [(n, messages, model, temperature, local_llm, config_path) for messages in messages_list]
-    #     # Use executor.starmap to pass the list of arguments
-    #     contents = executor.starmap(chat_completion, args)
-    # return list(contents)
-
-
-# def __chat_completion(n: int, messages: list[dict], model: str, temperature: float) -> list[dict]:
-#     """
-#     # TODO 这个是原来的代码
-#     Generate n responses using OpenAI Chat Completions API
-#     """
-#     total_samples = 0
-#     responses = []
-#     chunk_size = n if "gpt-3.5" in model else min(4, n)
-#     while True:
-#         if total_samples >= n:
-#             break
-#         for attempt in range(1000):
-#             try:
-#                 response_cur = client.chat.completions.create(model=model, messages=messages, temperature=temperature,
-#                                                               n=min(chunk_size, n - total_samples))
-#                 total_samples += chunk_size
-#                 break
-#             except Exception as e:
-#                 chunk_size = max(int(chunk_size / 2), 1)
-#                 logging.info(f"Current Chunk Size: {chunk_size}")
-#                 logging.info(f"Attempt {attempt + 1} failed with error: {e}")
-#                 time.sleep(1)
-#         if response_cur is None:
-#             logging.info("Code terminated due to too many failed attempts!")
-#             exit()
-#
-#         responses.extend(response_cur.choices)
-#     return responses
-
 
 class LLMAPI:
     """Language model that predicts continuation of provided source code.
@@ -155,14 +100,14 @@ class LLMAPI:
     def _draw_sample(self, message: List[Dict]) -> str:
         while True:
             try:
-                conn = http.client.HTTPSConnection("api.chatanywhere.com.cn", timeout=self._timeout)
+                conn = http.client.HTTPSConnection("[PUT YOUR API ENDPOINT HERE]", timeout=self._timeout)
                 payload = json.dumps({
                     "max_tokens": 512,
-                    "model": "gpt-3.5-turbo",
+                    "model": "[YOUR MODEL HERE]",
                     "messages": message
                 })
                 headers = {
-                    'Authorization': 'Bearer sk-KmKvU4zd08S3tbveba4YEfel6CL0ElvaLy9SOARdZRZpH0Xm',
+                    'Authorization': 'Bearer [PUT YOUR API KEY HERE]',
                     'User-Agent': 'Apifox/1.0.0 (https://apifox.com)',
                     'Content-Type': 'application/json'
                 }
@@ -191,6 +136,7 @@ def _load_runtime_config(config_path):
 class LocalLLM:
     """Language model that predicts continuation of provided source code.
     """
+
     def _update_config(self):
         try:
             config_dict = _load_runtime_config(self._config_path)

@@ -27,11 +27,8 @@ class ReEvo:
         self.runtime_config_path = runtime_config_path
         _run = 'None' if 'run' not in self.cfg else self.cfg.run
         _cur_file_ = os.path.dirname(__file__)
-        if local_llm:
-            _llm = 'codellama'
-        else:
-            _llm = 'gpt35'
-        self._my_log_path = os.path.join(_cur_file_, 'all_logs', f'{self.cfg.problem.problem_name}_{_llm}_run{_run}')
+        llm_name_ = cfg.llm_name
+        self._my_log_path = os.path.join(_cur_file_, 'all_logs', f'{self.cfg.problem.problem_name}_{llm_name_}_run{_run}')
         os.makedirs(self._my_log_path, exist_ok=True)
         #
         self.mutation_rate = cfg.mutation_rate

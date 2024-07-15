@@ -1,1 +1,0 @@
-{"function": "import numpy as np\ndef heuristics_v2(el: tuple[int, ...], n: int, w: int) -> float:\n    priority = 0.0\n    for e in el:\n        penalty = 0.0\n        if e <= w:\n            penalty = (w - e) ** 2\n        else:\n            penalty = (e - w) ** 2\n        priority += penalty\n    return -priority", "score": 1740, "iter": 4}

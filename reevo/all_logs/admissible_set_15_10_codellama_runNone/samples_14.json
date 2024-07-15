@@ -1,1 +1,0 @@
-{"function": "import numpy as np\ndef heuristics_v2(el, n, w):\n    # Calculate the penalty for the number of elements in the set\n    penalty = len(el) / n\n    \n    # Calculate the penalty for the sum of the elements in the set\n    penalty += sum(el) / w\n    \n    # Return the priority based on the calculated penalties\n    return -penalty", "score": 1452, "iter": 2}

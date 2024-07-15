@@ -1,1 +1,0 @@
-{"function": "import numpy as np\ndef priority(el: tuple[int, ...], n: int, w: int) -> float:\n    # Penalty for the number of elements in the set\n    penalty = len(el) / n\n    \n    # Penalty for the sum of the elements in the set\n    penalty += sum(el) / w\n    \n    return -penalty", "score": 1452, "iter": 1}

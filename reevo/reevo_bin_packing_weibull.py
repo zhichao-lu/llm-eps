@@ -14,38 +14,6 @@ import subprocess
 from utils.utils import *
 from my_task.bin_packing_weibull_eval import Sandbox
 
-RESUME_MODE = True
-PATH = 'all_logs/bin_packing_weibull_codellama_run3'
-
-
-def resume_pops():
-    log_file_path = os.path.join(os.path.dirname(__file__), PATH)
-    max_iters = 0
-    for sample_file in os.listdir(log_file_path):
-        sample_file = os.path.join(log_file_path, sample_file)
-        with open(sample_file, 'r') as f:
-            sample_json = json.load(f)
-            f.close()
-        max_iters = max(sample_json['iter'], max_iters)
-
-    max_iters -= 1
-    pop = []
-    for sample_file in os.listdir(log_file_path):
-        sample_file = os.path.join(log_file_path, sample_file)
-        with open(sample_file, 'r') as f:
-            sample_json = json.load(f)
-            f.close()
-            if sample_json['iter'] == max_iters:
-                indi = {
-                    "code": sample_json['function'],
-                    "obj": sample_json['score'] if sample_json['score'] is not None else float('inf'),
-                    "exec_success": True,
-                    "stdout_filepath": "",
-                    "code_path": ""
-                }
-                pop.append(indi)
-    return pop, max_iters
-
 
 class ReEvo:
     # def _local_llm_get_prompt
@@ -60,11 +28,12 @@ class ReEvo:
         self.runtime_config_path = runtime_config_path
         _run = 'None' if 'run' not in self.cfg else self.cfg.run
         _cur_file_ = os.path.dirname(__file__)
-        if local_llm:
-            _llm = 'codellama'
-        else:
-            _llm = 'gpt35'
-        self._my_log_path = os.path.join(_cur_file_, 'all_logs', f'{self.cfg.problem.problem_name}_{_llm}_run{_run}')
+        # if local_llm:
+        #     _llm = 'codellama'
+        # else:
+        #     _llm = 'gpt35'
+        llm_name_ = cfg.llm_name
+        self._my_log_path = os.path.join(_cur_file_, 'all_logs', f'{self.cfg.problem.problem_name}_{llm_name_}_run{_run}')
         print(self._my_log_path)
         os.makedirs(self._my_log_path, exist_ok=True)
         #
@@ -79,11 +48,7 @@ class ReEvo:
         self.best_code_path_overall = None
 
         self.init_prompt()
-
-        if RESUME_MODE:
-            self.resume_population()
-        else:
-            self.init_population()
+        self.init_population()
 
     def init_prompt(self) -> None:
         self.problem = self.cfg.problem.problem_name
@@ -139,15 +104,6 @@ class ReEvo:
         self.print_short_term_reflection_prompt = True  # Print short-term reflection prompt for the first iteration
         self.print_long_term_reflection_prompt = True  # Print long-term reflection prompt for the first iteration
 
-    def resume_population(self):
-        logging.info("Loading population...")
-        exist_samples = len(os.listdir(os.path.join(os.path.dirname(__file__), PATH)))
-        self.function_evals = exist_samples
-        pop, iters = resume_pops()
-        self.population = pop
-        self.iteration = iters
-        self.update_iter()
-        logging.info("Loading population OK !")
 
     def init_population(self) -> None:
         # Evaluate the seed function, and set it as Elite
@@ -193,7 +149,7 @@ class ReEvo:
         Convert response to individual
         """
         # content = response.message.content  
-        content = response  # TODO 如果用自己的API，那么response其实就是content
+        content = response
 
         # Write response to file
         file_name = f"problem_iter{self.iteration}_response{response_id}.txt" if file_name is None else file_name + ".txt"
@@ -239,7 +195,7 @@ class ReEvo:
 
         inner_runs = []
         # Run code to evaluate
-        for response_id in range(len(population)):  # TODO 这里所谓的response id其实就是一个编号
+        for response_id in range(len(population)):
             self.function_evals += 1
             # Skip if response is invalid
             if population[response_id]["code"] is None:
@@ -561,6 +517,6 @@ def main(cfg):
 
 if __name__ == "__main__":
     """
-python reevo_bin_packing_weibull.py problem=bin_packing_weibull +local_llm=True +runtime_config_path=bin_packing_weibull_run1.json +run=1
+python reevo_bin_packing_weibull.py problem=bin_packing_weibull +local_llm=True +llm_name=Codellama7b +runtime_config_path=bin_packing_weibull_run1.json +run=1
     """
     main()

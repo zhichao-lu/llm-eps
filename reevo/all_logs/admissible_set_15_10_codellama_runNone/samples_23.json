@@ -1,1 +1,0 @@
-{"function": "import numpy as np\ndef heuristics_v2(el: tuple[int, ...], n: int, w: int) -> float:\n    # Prioritize the elements that are closer to the target sum\n    priority = (w - sum(el)) / w\n    \n    # Penalize the number of elements in the set\n    penalty = len(el) / n\n    \n    return priority - penalty", "score": 1452, "iter": 3}
